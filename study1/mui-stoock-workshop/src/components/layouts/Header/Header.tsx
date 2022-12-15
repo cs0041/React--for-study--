@@ -19,16 +19,6 @@ import ListItemText from '@mui/material/ListItemText'
 import InboxIcon from '@mui/icons-material/MoveToInbox'
 import MailIcon from '@mui/icons-material/Mail'
 
-import Header from './components/layouts/Header'
-import Menu from './components/layouts/Menu'
-import { Link, Navigate, Route, RouterProps, Routes } from 'react-router-dom'
-import LoginPage from './components/pages/LoginPage'
-import RegisterPage from './components/pages/RegisterPage'
-import StockPage from './components/pages/StockPage'
-import StockCreatePage from './components/pages/StockCreatePage'
-import StockEditPage from './components/pages/StockEditPage'
-import ReportPage from './components/pages/ReportPage'
-import AboutUs from './components/pages/AboutUs'
 const drawerWidth = 240
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
@@ -80,47 +70,35 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }))
 
-export default function App() {
-  const theme = useTheme()
-  const [open, setOpen] = React.useState(true)
-
-  const handleDrawerOpen = () => {
-    setOpen(true)
-  }
-
-  const handleDrawerClose = () => {
-    setOpen(false)
-  }
-
-  return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <Header open={open} onDrawerOpen={handleDrawerOpen}/>
-      <Menu open={open} onDrawerClose={handleDrawerClose}/>
-      <Main open={open}>
-        <DrawerHeader />
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/stock" element={<StockPage  />} />
-          <Route path="/stock/create" element={<StockCreatePage  />} />
-          <Route path="/stock/edit/:id" element={<StockEditPage />} />
-          <Route path="/report" element={<ReportPage />} />
-          <Route path="/aboutus" element={<AboutUs />} />
-          <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Main>
-    </Box>
-  )
+type HeaderProp = {
+  open: boolean
+  onDrawerOpen():void
+  //sumOutput(a: number, b: number, c?: number): void
 }
 
+export default function Header({ open, onDrawerOpen }: HeaderProp) {
+  const theme = useTheme()
 
-const NotFound = () => {
+  const handleDrawerOpen = () => {
+    onDrawerOpen()
+  }
+
   return (
-    <div>
-      <h1>404</h1>
-      <Link to="/">Go back home</Link>
-    </div>
+    <AppBar position="fixed" open={open}>
+      <Toolbar>
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          onClick={handleDrawerOpen}
+          edge="start"
+          sx={{ mr: 2, ...(open && { display: 'none' }) }}
+        >
+          <MenuIcon />
+        </IconButton>
+        <Typography variant="h6" noWrap component="div">
+          Persistent drawer
+        </Typography>
+      </Toolbar>
+    </AppBar>
   )
 }
