@@ -120,7 +120,8 @@ export default function Menu({ open, onDrawerClose }: MenuProp) {
         <Stack direction="row" alignItems="center">
           <img 
           src='../../../../public/images/cm_logo.png' 
-          style={{height:30}} />
+           style={{height:30}} 
+            />
         <IconButton onClick={handleDrawerClose}>
           {theme.direction === 'ltr' ? (
             <ChevronLeftIcon />

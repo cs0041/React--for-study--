@@ -21,6 +21,7 @@ import MailIcon from '@mui/icons-material/Mail'
 import { Badge } from '@mui/material'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import AccountCircle from '@mui/icons-material/AccountCircle'
+import { useNavigate } from 'react-router'
 const drawerWidth = 240
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
@@ -80,6 +81,7 @@ type HeaderProp = {
 
 export default function Header({ open, onDrawerOpen }: HeaderProp) {
   const theme = useTheme()
+  const navigate = useNavigate()
 
   const handleDrawerOpen = () => {
     onDrawerOpen()
@@ -128,6 +130,7 @@ export default function Header({ open, onDrawerOpen }: HeaderProp) {
             aria-haspopup="true"
             onClick={() => {
               alert('Logout')
+              navigate('/login')
             }}
             color="inherit"
           >

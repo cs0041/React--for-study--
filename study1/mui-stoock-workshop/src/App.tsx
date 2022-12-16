@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Box from '@mui/material/Box'
+import { Box } from '@mui/material'
 import Drawer from '@mui/material/Drawer'
 import CssBaseline from '@mui/material/CssBaseline'
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar'
@@ -52,6 +52,7 @@ const theme = createTheme({
       },
     },
   },
+  spacing:8,
   palette: {
     background: {
       default: '#CFD2D6',
@@ -90,7 +91,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }))
 
 export default function App() {
-
   const [open, setOpen] = React.useState(true)
 
   const handleDrawerOpen = () => {
@@ -125,7 +125,6 @@ export default function App() {
     </ThemeProvider>
   )
 }
-
 
 const NotFound = () => {
   return (
