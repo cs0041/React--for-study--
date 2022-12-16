@@ -1,7 +1,9 @@
 import * as React from "react";
 import { useNavigate } from "react-router";
 import {Formik, FormikProps} from "formik";
-import { Box, Button, Card, CardContent, Stack, TextField, Typography } from '@mui/material'
+import { Box, Button, Card, CardContent, Stack, SxProps, TextField, Typography } from '@mui/material'
+import { Theme } from "@emotion/react";
+import { User } from "../../../types/user.type";
 type RegisterPageProps = {
   //
 };
@@ -9,6 +11,12 @@ type RegisterPageProps = {
 
 const RegisterPage: React.FC<any> = () => {
  const navigate = useNavigate();
+ const classes: SxProps<Theme> | any= {
+   root: { display: 'flex', justifyContent: 'center' },
+   buttons: {marginTop: 2}
+ }
+
+
  const showFormV1 = ({handleSubmit,handleChange,values,isSubmitting}:FormikProps<any>) => {
    return (
      <form action="" onSubmit={handleSubmit}>
@@ -32,11 +40,11 @@ const RegisterPage: React.FC<any> = () => {
        <br />
        <br />
        <button type="submit" disabled={isSubmitting}>Submit</button>
-       <button onClick={() => navigate(-1)}>Back</button>
+       <button onClick={() => navigate("/login")}>Back</button>
      </form>
    )
  }
- const showFormV2 = ({handleSubmit,handleChange,values,isSubmitting}:FormikProps<any>) => {
+ const showFormV2 = ({handleSubmit,handleChange,values,isSubmitting}:FormikProps<User>) => {
    return (
      <form action="" onSubmit={handleSubmit}>
        <TextField
@@ -65,7 +73,7 @@ const RegisterPage: React.FC<any> = () => {
 
        <br />
 
-       <Stack direction="row" spacing={2}>
+       <Stack direction="row" spacing={2} sx={classes.buttons}>
          <Button
            type="submit"
            fullWidth
@@ -76,7 +84,7 @@ const RegisterPage: React.FC<any> = () => {
            Create
          </Button>
          <Button
-           onClick={() => navigate(-1)}
+           onClick={() => navigate("/login")}
            type="button"
            fullWidth
            variant="outlined"
@@ -88,31 +96,32 @@ const RegisterPage: React.FC<any> = () => {
    )
  }
 
+ const initialValues:User = { username: '', password: '' }
 
  
  return (
    <>
-   <Box>
-      <Card sx={{maxWidth:345}}>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            Register
-          </Typography>
-          <Formik 
-            onSubmit={(values,{setSubmitting})=>{
-              alert(JSON.stringify(values))
+     <Box sx={classes.root}>
+       <Card sx={{ maxWidth: 345 }}>
+         <CardContent>
+           <Typography gutterBottom variant="h5" component="h2">
+             Register
+           </Typography>
+           <Formik
+             onSubmit={(values, { setSubmitting }) => {
+               alert(JSON.stringify(values))
 
-              setTimeout(() => {
-                setSubmitting(false)
-              },2000)
-            }} 
-            initialValues={{ username: '', password: '' }}>
-            {props => showFormV2(props)}
-          </Formik>
-        </CardContent>
-      </Card>
-   </Box>
-  
+               setTimeout(() => {
+                 setSubmitting(false)
+               }, 2000)
+             }}
+             initialValues={initialValues}
+           >
+             {(props) => showFormV2(props)}
+           </Formik>
+         </CardContent>
+       </Card>
+     </Box>
    </>
  )
 }
