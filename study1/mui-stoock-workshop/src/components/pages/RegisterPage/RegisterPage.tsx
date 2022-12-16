@@ -4,13 +4,22 @@ import {Formik, FormikProps} from "formik";
 import { Box, Button, Card, CardContent, Stack, SxProps, TextField, Typography } from '@mui/material'
 import { Theme } from "@emotion/react";
 import { User } from "../../../types/user.type";
-import axios from "axios"
+import { httpClient } from './../../../utils/httpclient'
+import { server } from "../../../Constants";
+import * as registerActions from "../../../actions/register.action";
+import { useDispatch, useSelector } from "react-redux";
+import {RootReducers} from "../../../reducers"
+import { useAppDispatch } from "../../../main";
 type RegisterPageProps = {
   //
 };
 
 
 const RegisterPage: React.FC<any> = () => {
+ const registerRequest = useSelector((state:RootReducers)=>state.registerReducer)
+ 
+ const dispatch = useAppDispatch();
+ 
  const navigate = useNavigate();
  const classes: SxProps<Theme> | any= {
    root: { display: 'flex', justifyContent: 'center' },
@@ -110,13 +119,8 @@ const RegisterPage: React.FC<any> = () => {
            </Typography>
            <Formik
              onSubmit={ async (values, { setSubmitting }) => {
-
-              const result = await axios.post("http://localhost:8085/api/v2/authen/register",values)
-               
-              alert(JSON.stringify(result.data))
-     
-              setTimeout(() => { setSubmitting(false) }, 2000)
-             }}
+             dispatch(registerActions.register(values))
+            }}
              initialValues={initialValues}
            >
              {(props) => showFormV2(props)}
