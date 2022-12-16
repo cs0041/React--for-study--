@@ -18,7 +18,12 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import InboxIcon from '@mui/icons-material/MoveToInbox'
 import MailIcon from '@mui/icons-material/Mail'
+import Layers from '@mui/icons-material/Layers'
+import BarChart from '@mui/icons-material/BarChart'
+import Person from '@mui/icons-material/Person'
 import {NavLink} from 'react-router-dom'
+import { Stack } from '@mui/material'
+
 const drawerWidth = 240
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
@@ -112,6 +117,10 @@ export default function Menu({ open, onDrawerClose }: MenuProp) {
       open={open}
     >
       <DrawerHeader>
+        <Stack direction="row" alignItems="center">
+          <img 
+          src='../../../../public/images/cm_logo.png' 
+          style={{height:30}} />
         <IconButton onClick={handleDrawerClose}>
           {theme.direction === 'ltr' ? (
             <ChevronLeftIcon />
@@ -119,31 +128,35 @@ export default function Menu({ open, onDrawerClose }: MenuProp) {
             <ChevronRightIcon />
           )}
         </IconButton>
+        </Stack>
       </DrawerHeader>
       <Divider />
       <List>
+        {/* Stock */}
         <ListItem button component={MyNavLink} to="/stock" activeClassName ="Mui-selected" >
           <ListItemButton>
             <ListItemIcon>
-              <InboxIcon />
+              <Layers />
             </ListItemIcon>
             <ListItemText primary="Stock" />
           </ListItemButton>
         </ListItem>
 
+            {/* Report */}
          <ListItem button component={MyNavLink} to="/report" activeClassName ="Mui-selected" >
           <ListItemButton>
             <ListItemIcon>
-              <InboxIcon />
+              <BarChart />
             </ListItemIcon>
             <ListItemText primary="Report" />
           </ListItemButton>
         </ListItem>
 
+          {/* About is */}
          <ListItem button component={MyNavLink} to="/aboutus" activeClassName ="Mui-selected" >
           <ListItemButton>
             <ListItemIcon>
-              <InboxIcon />
+              <Person />
             </ListItemIcon>
             <ListItemText primary="AboutUs" />
           </ListItemButton>

@@ -1,24 +1,14 @@
 import * as React from 'react'
-import { styled, useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import Drawer from '@mui/material/Drawer'
 import CssBaseline from '@mui/material/CssBaseline'
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar'
-import Toolbar from '@mui/material/Toolbar'
-import List from '@mui/material/List'
-import Typography from '@mui/material/Typography'
-import Divider from '@mui/material/Divider'
-import IconButton from '@mui/material/IconButton'
-import MenuIcon from '@mui/icons-material/Menu'
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight'
-import ListItem from '@mui/material/ListItem'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
-import InboxIcon from '@mui/icons-material/MoveToInbox'
-import MailIcon from '@mui/icons-material/Mail'
-
+import {
+  ThemeProvider,
+  createTheme,
+  styled,
+  useTheme,
+} from '@mui/material/styles'
 import Header from './components/layouts/Header'
 import Menu from './components/layouts/Menu'
 import { Link, Navigate, Route, RouterProps, Routes } from 'react-router-dom'
@@ -49,6 +39,25 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
     marginLeft: 0,
   }),
 }))
+
+const theme = createTheme({
+  components: {
+    MuiDrawer: {
+      styleOverrides: {
+        paper: {
+          backgroundImage:
+            'url(' + `../../../../public/images/background_menu.jpg` + ')',
+          width: drawerWidth,
+        },
+      },
+    },
+  },
+  palette: {
+    background: {
+      default: '#CFD2D6',
+    },
+  },
+})
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean
@@ -81,7 +90,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }))
 
 export default function App() {
-  const theme = useTheme()
+
   const [open, setOpen] = React.useState(true)
 
   const handleDrawerOpen = () => {
@@ -93,25 +102,27 @@ export default function App() {
   }
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <Header open={open} onDrawerOpen={handleDrawerOpen}/>
-      <Menu open={open} onDrawerClose={handleDrawerClose}/>
-      <Main open={open}>
-        <DrawerHeader />
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/stock" element={<StockPage  />} />
-          <Route path="/stock/create" element={<StockCreatePage  />} />
-          <Route path="/stock/edit/:id" element={<StockEditPage />} />
-          <Route path="/report" element={<ReportPage />} />
-          <Route path="/aboutus" element={<AboutUs />} />
-          <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Main>
-    </Box>
+    <ThemeProvider theme={theme}>
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <Header open={open} onDrawerOpen={handleDrawerOpen} />
+        <Menu open={open} onDrawerClose={handleDrawerClose} />
+        <Main open={open}>
+          <DrawerHeader />
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/stock" element={<StockPage />} />
+            <Route path="/stock/create" element={<StockCreatePage />} />
+            <Route path="/stock/edit/:id" element={<StockEditPage />} />
+            <Route path="/report" element={<ReportPage />} />
+            <Route path="/aboutus" element={<AboutUs />} />
+            <Route path="/" element={<Navigate to="/login" />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Main>
+      </Box>
+    </ThemeProvider>
   )
 }
 
