@@ -4,6 +4,7 @@ import {Formik, FormikProps} from "formik";
 import { Box, Button, Card, CardContent, Stack, SxProps, TextField, Typography } from '@mui/material'
 import { Theme } from "@emotion/react";
 import { User } from "../../../types/user.type";
+import axios from "axios"
 type RegisterPageProps = {
   //
 };
@@ -108,12 +109,13 @@ const RegisterPage: React.FC<any> = () => {
              Register
            </Typography>
            <Formik
-             onSubmit={(values, { setSubmitting }) => {
-               alert(JSON.stringify(values))
+             onSubmit={ async (values, { setSubmitting }) => {
 
-               setTimeout(() => {
-                 setSubmitting(false)
-               }, 2000)
+              const result = await axios.post("http://localhost:8085/api/v2/authen/register",values)
+               
+              alert(JSON.stringify(result.data))
+     
+              setTimeout(() => { setSubmitting(false) }, 2000)
              }}
              initialValues={initialValues}
            >
