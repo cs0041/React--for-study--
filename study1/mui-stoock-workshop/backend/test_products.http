@@ -3,7 +3,7 @@ GET http://localhost:8085/api/v2/stock/product HTTP/1.1
 
 
 ### Get product by Id
-GET http://localhost:8085/api/v2/stock/product/7 HTTP/1.1
+GET http://localhost:8085/api/v2/stock/product/6 HTTP/1.1
 
 
 ### Get product by keyword
@@ -63,4 +63,4 @@ Content-Type: image/png
 
 
 ### Delete 
-DELETE http://localhost:8085/api/v2/stock/product/13 HTTP/1.1
+DELETE http://localhost:8085/api/v2/stock/product/58 HTTP/1.1
